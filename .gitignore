@@ -1,2 +1,5 @@
+#osx stuff
+.DS_Store
+
 build/
 *.icloud
