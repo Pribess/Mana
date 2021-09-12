@@ -1,10 +1,10 @@
 // Copyright (c) 2021 Heewon Cho
 
-#ifndef _MANA_FRONT_LEXER_TOKEN
-#define _MANA_FRONT_LEXER_TOKEN
+#ifndef TOKEN_HPP
+#define TOKEN_HPP
 
 enum Token {
-    TOKEN_
+        
 };
 
 #endif
