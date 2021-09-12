@@ -1,2 +1,0 @@
-# Mana
-Mana is procedural, stack-oriented programming language
