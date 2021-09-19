@@ -11,6 +11,8 @@ add_executable(
     ${SRC_FILES}
 )
 
+include_directories(deps/llvm-project/llvm/include/llvm-c)
+
 if (APPLE)
     target_link_libraries(${TARGET})
 elseif(UNIX)
