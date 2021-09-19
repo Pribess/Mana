@@ -4,7 +4,11 @@
 #define LEXER_HPP
 
 class Lexer {
-    
+    private:
+
+    public:
+        Lexer();
+        ~Lexer();
 };
 
 #endif
