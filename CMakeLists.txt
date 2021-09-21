@@ -6,6 +6,9 @@ set(TARGET mana)
 
 file(GLOB SRC_FILES src/*.cpp)
 
+find_package(LLVM REQUIRED)
+include_directories(${LLVM_INCLUDE_DIR})
+
 add_executable(
     ${TARGET}
     ${SRC_FILES}
