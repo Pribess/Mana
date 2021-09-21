@@ -4,6 +4,6 @@
 #include <llvm-c/Core.h>
 
 int main(int argc, char **argv) {
-    
+    const char *mes;
     return 0;
 }

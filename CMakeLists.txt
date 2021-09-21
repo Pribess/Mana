@@ -11,12 +11,19 @@ add_executable(
     ${SRC_FILES}
 )
 
-include_directories(deps/llvm-project/llvm/include/)
-
 if (APPLE)
-    target_link_libraries(${TARGET})
+    target_link_libraries(
+        ${TARGET}
+        ${LLVM_LIBRARIES}
+        )
 elseif(UNIX)
-    target_link_libraries(${TARGET})
+    target_link_libraries(
+        ${TARGET}
+        ${LLVM_LIBRARIES}
+        )
 elseif(MINGW)
-    target_link_libraries(${TARGET})
+    target_link_libraries(
+        ${TARGET}
+        ${LLVM_LIBRARIES}
+        )
 endif()
