@@ -68,6 +68,7 @@ enum class CharType {
     WhiteSpace,
     NumberLiteral,
     StringLiteral,
+    Controller,
     Identifier,
     Operator
 };
