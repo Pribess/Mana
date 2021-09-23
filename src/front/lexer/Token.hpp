@@ -14,7 +14,7 @@ enum Token {
     String,
     Char,
     
-    Word,
+    Identifier,
 
     If,
     Elif,
@@ -74,8 +74,8 @@ enum class CharType {
 };
 
 static std::map<std::string, Token> tokenmap = {
-    {},
-    {}
+    {"@Unknown", Token::Unknown},
+    {"@End", Token::End}
 };
 
 #endif
