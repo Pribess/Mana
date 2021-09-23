@@ -3,6 +3,7 @@
 #ifndef PREPROC_HPP
 #define PREPROC_HPP
 
+#include <fstream>
 #include <string>
 #include <unordered_map>
 
