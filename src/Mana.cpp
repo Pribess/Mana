@@ -11,6 +11,18 @@ void credit() {
     std::endl;
 }
 
+void help() {
+    std::cout << 
+    "usage: mana <option> <file>\n" <<
+    "\"mana --help\" and \"mana -h\" list available option\n" <<
+    std::endl;
+
+    std::cout <<
+    "--version, -v      see current version\n" <<
+    "--interpret, -i    launch interpreting mode\n" <<
+    std::endl;
+}
+
 enum mode {
     Compile,
     Interpret
@@ -44,10 +56,11 @@ rst argparse(int argc, char **argv) {
 
     ret.mmode = Compile;
 
-    while ((opt = getopt_long(argc, argv, "vi", optlist, &optidx)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hvi", optlist, &optidx)) != -1) {
         switch (opt) {
             case 'h':
-
+                help();
+                break;
             case 'v':
                 credit();
                 exit(0);
