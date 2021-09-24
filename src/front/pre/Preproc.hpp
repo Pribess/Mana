@@ -3,16 +3,17 @@
 #ifndef PREPROC_HPP
 #define PREPROC_HPP
 
-#include <fstream>
+#include <vector>
 #include <string>
-#include <unordered_map>
+#include <fstream>
 
 class Preproc {
     private:
-        std::unordered_map<std::string, std::string> deflist;
+        std::string file;
     public:
-        Preproc(std::unordered_map<std::string, std::string> predef);
-        ~Preproc();
+        Preproc(std::string file);
+
+        std::string run();
 };
 
 #endif

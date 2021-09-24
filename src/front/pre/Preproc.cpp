@@ -2,10 +2,10 @@
 
 #include "Preproc.hpp"
 
-Preproc::Preproc(std::unordered_map<std::string, std::string> predef) {
-
+Preproc::Preproc(std::string file) {
+    this->file = file;
 }
 
-Preproc::~Preproc() {
-
+std::string Preproc::run() {
+    return this->file;
 }

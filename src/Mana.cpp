@@ -2,7 +2,11 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <string>
 #include <getopt.h>
+
+#include "utils/Keyvalue.hpp"
 
 void credit() {
     std::cout 
@@ -23,17 +27,7 @@ void help() {
     std::endl;
 }
 
-enum mode {
-    Compile,
-    Interpret
-};
-
-typedef struct rst {
-    mode mmode;
-    std::string filename;
-} rst;
-
-rst argparse(int argc, char **argv) {
+std::vector<std::string> argparse(int argc, char **argv) {
 
     if (argc < 2) {
         std::cout << 
@@ -52,10 +46,6 @@ rst argparse(int argc, char **argv) {
     int opt;
     int optidx;
 
-    rst ret;
-
-    ret.mmode = Compile;
-
     while ((opt = getopt_long(argc, argv, "hvi", optlist, &optidx)) != -1) {
         switch (opt) {
             case 'h':
@@ -66,15 +56,25 @@ rst argparse(int argc, char **argv) {
                 exit(0);
                 break;
             case 'i':
-                ret.mmode = Interpret;
+                Keyvalue::SetKey("mode", "Interpret");
                 break;
         }
     }
     
-    return ret;
+    std::vector<std::string> filelist;
+
+    for (int cnt = 1 ; cnt < argc ; cnt++ ) {
+        if (std::string(argv[cnt]).front() == '-') {
+            continue;
+        }
+        filelist.push_back(argv[cnt]);
+    }
+
+    return filelist;
 }
 
 int main(int argc, char **argv) {
-    rst env = argparse(argc, argv);
+    std::vector<std::string> rst = argparse(argc, argv);
+    
     return 0;
 }
