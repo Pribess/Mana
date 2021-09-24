@@ -1,12 +1,14 @@
 // Copyright (c) 2021 Heewon Cho
 
 #include <iostream>
+#include <fstream>
 #include <getopt.h>
 
 void credit() {
     std::cout 
-    << PROJECT_NAME << " version " << PROJECT_VERSION << std::endl 
-    << __VERSION__ << " " << __TIMESTAMP__ << std::endl;
+    << PROJECT_NAME << " version " << PROJECT_VERSION << "\n"
+    << __VERSION__ << " " << __TIMESTAMP__ << 
+    std::endl;
 }
 
 enum mode {
@@ -14,14 +16,23 @@ enum mode {
     Interpret
 };
 
-typedef struct {
+typedef struct rst {
     mode mmode;
-
+    std::string filename;
 } rst;
 
 rst argparse(int argc, char **argv) {
 
+    if (argc < 2) {
+        std::cout << 
+        "usage: mana <option> <file>\n" <<
+        "\"mana --help\" and \"mana -h\" list available option" <<
+        std::endl;
+        exit(1);
+    }
+
     static option optlist[] =  {
+        {"help", no_argument, NULL, 'h'},
         {"version", no_argument, NULL, 'v'},
         {"interpret", no_argument, NULL, 'i'}
     };
@@ -31,8 +42,12 @@ rst argparse(int argc, char **argv) {
 
     rst ret;
 
+    ret.mmode = Compile;
+
     while ((opt = getopt_long(argc, argv, "vi", optlist, &optidx)) != -1) {
         switch (opt) {
+            case 'h':
+
             case 'v':
                 credit();
                 exit(0);
@@ -47,6 +62,6 @@ rst argparse(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-    argparse(argc, argv);
+    rst env = argparse(argc, argv);
     return 0;
 }

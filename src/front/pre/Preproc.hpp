@@ -11,7 +11,7 @@ class Preproc {
     private:
         std::unordered_map<std::string, std::string> deflist;
     public:
-        Preproc();
+        Preproc(std::unordered_map<std::string, std::string> predef);
         ~Preproc();
 };
 

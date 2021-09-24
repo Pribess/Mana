@@ -2,7 +2,7 @@
 
 #include "Preproc.hpp"
 
-Preproc::Preproc() {
+Preproc::Preproc(std::unordered_map<std::string, std::string> predef) {
 
 }
 
