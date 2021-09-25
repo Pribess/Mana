@@ -46,7 +46,7 @@ std::vector<std::string> argparse(int argc, char **argv) {
     int opt;
     int optidx;
 
-    while ((opt = getopt_long(argc, argv, "hvi", optlist, &optidx)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hvio:", optlist, &optidx)) != -1) {
         switch (opt) {
             case 'h':
                 help();
@@ -57,17 +57,29 @@ std::vector<std::string> argparse(int argc, char **argv) {
                 break;
             case 'i':
                 Keyvalue::SetKey("mode", "Interpret");
+                if (Keyvalue::GetKey("target") != "") {
+                    std::cout << "Interpreting mode cannot run with -o option" << std::endl;
+                    exit(1);
+                }
                 break;
+            case 'o':
+                if (Keyvalue::GetKey("mode") == "Interpret") {
+                    std::cout << "-o option cannot declare with Interpreting mode" << std::endl;
+                    exit(1);
+                }
+                Keyvalue::SetKey("target", optarg);
         }
     }
     
     std::vector<std::string> filelist;
 
     for (int cnt = 1 ; cnt < argc ; cnt++ ) {
-        if (std::string(argv[cnt]).front() == '-') {
-            continue;
+        if (
+            !std::string(argv[cnt]).starts_with("-") &&
+            std::string(argv[cnt - 1]) != std::string("-o")
+        ) {
+            filelist.push_back(argv[cnt]);
         }
-        filelist.push_back(argv[cnt]);
     }
 
     return filelist;
@@ -75,6 +87,8 @@ std::vector<std::string> argparse(int argc, char **argv) {
 
 int main(int argc, char **argv) {
     std::vector<std::string> rst = argparse(argc, argv);
-    
+    for (auto cnt : rst) {
+        std::cout << cnt <<std::endl;
+    }
     return 0;
 }

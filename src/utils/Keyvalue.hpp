@@ -11,12 +11,8 @@ class Keyvalue {
         static std::unordered_map<std::string, std::string> keyvalue;
 
     public:
-        static void SetKey(std::string key, std::string value) {
-            Keyvalue::keyvalue[key] = value;
-        }
-        static std::string GetKey(std::string key) {
-            return Keyvalue::keyvalue[key];
-        }
+        static void SetKey(std::string key, std::string value);
+        static std::string GetKey(std::string key);
 };
 
 #endif

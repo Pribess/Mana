@@ -9,7 +9,7 @@ add_definitions(-DPROJECT_VERSION="${PROJECT_VERSION}")
 
 set (CMAKE_CXX_STANDARD 20)
 
-file(GLOB SRC_FILES src/*.cpp)
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
 
 find_package(LLVM REQUIRED)
