@@ -15,6 +15,7 @@ file(GLOB_RECURSE SRC_FILES src/*.cpp)
 find_package(LLVM REQUIRED)
 include_directories(${LLVM_INCLUDE_DIR})
 
+include_directories(src/)
 
 add_executable(
     ${TARGET}

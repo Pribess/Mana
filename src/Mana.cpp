@@ -7,6 +7,7 @@
 #include <getopt.h>
 
 #include "utils/Keyvalue.hpp"
+#include "utils/Error.hpp"
 
 void credit() {
     std::cout 
