@@ -8,8 +8,12 @@
 #include <string>
 #include <iostream>
 
-std::string GETPOS(std::string::iterator iter, std::string src);
+namespace Error {
 
-#define GERROR(at, str) std::cout << at << RED << "fatal error:" << RESET << str << std::endl;
+    std::string GETPOS(std::string::iterator iter, std::string *src);
+
+}
+
+#define GERROR(filename, at, str) std::cout << filename << ": " << at << RED << "fatal error:" << RESET << str << std::endl;
 
 #endif

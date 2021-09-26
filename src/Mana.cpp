@@ -7,7 +7,7 @@
 #include <getopt.h>
 
 #include "utils/Keyvalue.hpp"
-#include "utils/Error.hpp"
+#include "front/pre/Preproc.hpp"
 
 void credit() {
     std::cout 
@@ -88,8 +88,7 @@ std::vector<std::string> argparse(int argc, char **argv) {
 
 int main(int argc, char **argv) {
     std::vector<std::string> rst = argparse(argc, argv);
-    for (auto cnt : rst) {
-        std::cout << cnt <<std::endl;
-    }
+    Preproc *p = new Preproc(rst.at(0));
+    std::cout << p->run() << std::endl;
     return 0;
 }

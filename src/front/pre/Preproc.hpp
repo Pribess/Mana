@@ -13,11 +13,12 @@
 
 class Preproc {
     private:
+        std::string filename;
         std::string file;
 
-        std::string import(std::string origin, std::string::iterator iter, std::string dir);
+        void import(std::string::iterator begin, std::string::iterator end, std::string dir);
     public:
-        Preproc(std::string file);
+        Preproc(std::string filename);
 
         std::string run();
 };
