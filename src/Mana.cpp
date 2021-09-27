@@ -7,6 +7,7 @@
 #include <getopt.h>
 
 #include "utils/Keyvalue.hpp"
+#include "utils/Error.hpp"
 #include "front/pre/Preproc.hpp"
 
 void credit() {
@@ -59,13 +60,13 @@ std::vector<std::string> argparse(int argc, char **argv) {
             case 'i':
                 Keyvalue::SetKey("mode", "Interpret");
                 if (Keyvalue::GetKey("target") != "") {
-                    std::cout << "Interpreting mode cannot run with -o option" << std::endl;
+                    ERROR("Interpreting mode cannot run with -o option");
                     exit(1);
                 }
                 break;
             case 'o':
                 if (Keyvalue::GetKey("mode") == "Interpret") {
-                    std::cout << "-o option cannot declare with Interpreting mode" << std::endl;
+                    ERROR("-o option cannot declare with Interpreting mode");
                     exit(1);
                 }
                 Keyvalue::SetKey("target", optarg);

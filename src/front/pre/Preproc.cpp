@@ -5,8 +5,13 @@
 Preproc::Preproc(std::string filename) {
     this->filename = filename;
     std::ifstream filestream(this->filename);
+
+    if (filestream.fail()) {
+        ERROR("mana: No such file or directory: " << this->filename);
+        exit(1);
+    }
+    
     std::getline(filestream, this->file);
-    // std::cout << this->file<< std::endl;
 }
 
 void Preproc::import(std::string::iterator begin, std::string::iterator end, std::string dir) {
@@ -15,7 +20,7 @@ void Preproc::import(std::string::iterator begin, std::string::iterator end, std
     std::ifstream filestream(dir);
 
     if (filestream.fail()) {
-        GERROR(this->filename, Error::GETPOS(begin, &this->file) ,dir << ": No such file or directory");
+        GERROR(this->filename, Error::GETPOS(begin, &this->file) , " " << dir << "" << ": No such file or directory");
         exit(1);
     }
 
@@ -50,6 +55,11 @@ std::string Preproc::run() {
         if (*iter == '#') {
             switch (*(iter + 1)) {
                 case 'i':
+                    if (Utils::Hashx65599("import", 6) != Utils::Hashx65599(&(*(iter + 1)), 6)) {
+                        GERROR(this->filename, Error::GETPOS(iter + 7 + cnt, &this->file), ": Unknown macro");
+                        exit(1);
+                    }
+
                     bool innamescope = false;
 
                     std::string dir;
@@ -61,11 +71,6 @@ std::string Preproc::run() {
                             innamescope = true;
                         }
 
-                        if (*(iter + 7 + cnt) == '<' && innamescope) {
-                            GERROR(this->filename, Error::GETPOS(iter + 7 + cnt, &this->file), ": '>' character required");
-                            exit(1);
-                        }
-
                         if (*(iter + 7 + cnt) == '>') {
                             if (!innamescope) {
                                 GERROR(this->filename, Error::GETPOS(iter + 7 + cnt, &this->file), ": '<' character required before '>'");
@@ -73,6 +78,7 @@ std::string Preproc::run() {
                             }
 
                             innamescope = false;
+                            dir.erase(0, 1);
                             this->import(iter, iter + 7 + cnt, dir);
                             break;
                         }
@@ -80,6 +86,7 @@ std::string Preproc::run() {
                         if (innamescope) {
                             dir.push_back(*(iter + 7 + cnt));
                         }
+
                     }
                     break;
             }

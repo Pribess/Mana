@@ -5,11 +5,11 @@
 
 namespace Utils {
 
-    constexpr unsigned int Hashx65599(const char *str) {
+    constexpr unsigned int Hashx65599(const char *str, size_t len) {
         unsigned int hash = 0;
-        while (*str) {
-            hash = 65599 * hash + str[0];
-            str++;
+        for(size_t i = 0; i < len; ++i)
+        {
+            hash = 65599 * hash + str[i];
         }
         return hash ^ (hash >> 16);
     }

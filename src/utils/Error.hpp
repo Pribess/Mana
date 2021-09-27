@@ -14,6 +14,7 @@ namespace Error {
 
 }
 
+#define ERROR(str) std::cout << str << std::endl;
 #define GERROR(filename, at, str) std::cout << filename << ": " << at << RED << "fatal error:" << RESET << str << std::endl;
 
 #endif
