@@ -11,7 +11,10 @@ Preproc::Preproc(std::string filename) {
         exit(1);
     }
     
-    std::getline(filestream, this->file);
+    std::stringstream ss;
+    ss << filestream.rdbuf();
+
+    this->file = ss.str();
 }
 
 void Preproc::import(std::string::iterator begin, std::string::iterator end, std::string dir) {
@@ -23,12 +26,11 @@ void Preproc::import(std::string::iterator begin, std::string::iterator end, std
         GERROR(this->filename, Error::GETPOS(begin, &this->file) , " " << dir << "" << ": No such file or directory");
         exit(1);
     }
+    
+    std::stringstream ss;
+    ss << filestream.rdbuf();
 
-    std::string importfile;
-    std::getline(filestream, importfile);
-
-    this->file.replace(begin, end, importfile);
-    std::cout << "after imported \n"<< this->file<< std::endl;
+    this->file.replace(begin, end, ss.str());
 }
 
 std::string Preproc::run() {
@@ -64,8 +66,7 @@ std::string Preproc::run() {
 
                     std::string dir;
 
-                    for (int cnt = 0 ; ; cnt++) {
-                        std::cout << *(iter + 7 +cnt) <<std::endl;
+                    for (int cnt = 0 ; cnt < this->file.size() ; cnt++) {
 
                         if (*(iter + 7 + cnt) == '<' && !innamescope) {
                             innamescope = true;
@@ -79,7 +80,7 @@ std::string Preproc::run() {
 
                             innamescope = false;
                             dir.erase(0, 1);
-                            this->import(iter, iter + 7 + cnt, dir);
+                            this->import(iter, iter + 8 + cnt, dir);
                             break;
                         }
 
@@ -87,6 +88,10 @@ std::string Preproc::run() {
                             dir.push_back(*(iter + 7 + cnt));
                         }
 
+                        if (cnt >= this->file.size() - 1) {
+                            GERROR(this->filename, Error::GETPOS(iter + 7, &this->file), ": '>' character required");
+                            exit(1);
+                        }
                     }
                     break;
             }

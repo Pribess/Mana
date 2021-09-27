@@ -90,6 +90,10 @@ std::vector<std::string> argparse(int argc, char **argv) {
 int main(int argc, char **argv) {
     std::vector<std::string> rst = argparse(argc, argv);
     Preproc *p = new Preproc(rst.at(0));
-    std::cout << p->run() << std::endl;
+    std::ifstream asd(rst.at(0)) ;
+    std::stringstream asf;
+    asf << asd.rdbuf();
+    std::cout << "origin:\n" << asf.str() << std::endl;
+    std::cout << "after:\n" <<p->run() << std::endl;
     return 0;
 }
