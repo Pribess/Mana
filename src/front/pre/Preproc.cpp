@@ -17,20 +17,28 @@ Preproc::Preproc(std::string filename) {
     this->file = ss.str();
 }
 
-void Preproc::import(std::string::iterator begin, std::string::iterator end, std::string dir) {
-
-    dir.append(".ma");
-    std::ifstream filestream(dir);
+Preproc::Preproc(std::string filename, std::string filenameprev, std::string pos) {
+    this->filename = filename;
+    std::ifstream filestream(this->filename);
 
     if (filestream.fail()) {
-        GERROR(this->filename, Error::GETPOS(begin, &this->file) , " " << dir << "" << ": No such file or directory");
+        GERROR(filenameprev, pos, ": No such file or directory: " << this->filename);
         exit(1);
     }
     
     std::stringstream ss;
     ss << filestream.rdbuf();
 
-    this->file.replace(begin, end, ss.str());
+    this->file = ss.str();
+}
+
+void Preproc::import(std::string::iterator begin, std::string::iterator end, std::string dir) {
+
+    dir.append(".ma");
+
+    Preproc *p = new Preproc(dir, this->filename, Error::GETPOS(begin, &this->file));
+
+    this->file.replace(begin, end, p->run());
 }
 
 std::string Preproc::run() {
@@ -68,6 +76,10 @@ std::string Preproc::run() {
 
                     for (int cnt = 0 ; cnt < this->file.size() ; cnt++) {
 
+                        if (*(iter + 7 + cnt) != '<' && *(iter + 7 + cnt) != ' ') {
+                            GERROR(this->filename, Error::GETPOS(iter + 7, &this->file), ": '<' character required");
+                        }
+
                         if (*(iter + 7 + cnt) == '<' && !innamescope) {
                             innamescope = true;
                         }
@@ -80,6 +92,11 @@ std::string Preproc::run() {
 
                             innamescope = false;
                             dir.erase(0, 1);
+
+                            if (dir.size() == 0) {
+                                GERROR(this->filename, Error::GETPOS(iter + 7 + cnt, &this->file), ": File name should be declared");
+                            }
+
                             this->import(iter, iter + 8 + cnt, dir);
                             break;
                         }
