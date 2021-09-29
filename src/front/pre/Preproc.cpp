@@ -76,7 +76,7 @@ std::string Preproc::run() {
 
                     for (int cnt = 0 ; cnt < this->file.size() ; cnt++) {
 
-                        if (*(iter + 7 + cnt) != '<' && *(iter + 7 + cnt) != ' ') {
+                        if (*(iter + 7 + cnt) != '<' && *(iter + 7 + cnt) != ' ' && !innamescope) {
                             GERROR(this->filename, Error::GETPOS(iter + 7, &this->file), ": '<' character required");
                         }
 
