@@ -1,18 +1,23 @@
 // Copyright (c) 2021 Heewon Cho
 
-#ifndef KEYVALUE_H
-#define KEYVALUE_H
+#ifndef KEYVALUE_HPP
+#define KEYVALUE_HPP
 
 #include <unordered_map>
 #include <string>
 
+enum Key {
+    mode,
+    target
+};
+
 class Keyvalue {
     private:
-        static std::unordered_map<std::string, std::string> keyvalue;
+        static std::unordered_map<Key, std::string> keyvalue;
 
     public:
-        static void SetKey(std::string key, std::string value);
-        static std::string GetKey(std::string key);
+        static void SetKey(Key key, std::string value);
+        static std::string GetKey(Key key);
 };
 
 #endif

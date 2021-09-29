@@ -1,14 +1,13 @@
 // Copyright (c) 2021 Heewon Cho
 
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <string>
 #include <getopt.h>
 
+#include "Driver.hpp"
 #include "utils/data/Keyvalue.hpp"
 #include "utils/Error.hpp"
-#include "front/pre/Preproc.hpp"
 
 void credit() {
     std::cout 
@@ -58,18 +57,18 @@ std::vector<std::string> argparse(int argc, char **argv) {
                 exit(0);
                 break;
             case 'i':
-                Keyvalue::SetKey("mode", "Interpret");
-                if (Keyvalue::GetKey("target") != "") {
+                Keyvalue::SetKey(mode, "Interpret");
+                if (Keyvalue::GetKey(target) != "") {
                     ERROR("Interpreting mode cannot run with -o option");
                     exit(1);
                 }
                 break;
             case 'o':
-                if (Keyvalue::GetKey("mode") == "Interpret") {
+                if (Keyvalue::GetKey(mode) == "Interpret") {
                     ERROR("-o option cannot declare with Interpreting mode");
                     exit(1);
                 }
-                Keyvalue::SetKey("target", optarg);
+                Keyvalue::SetKey(target, optarg);
         }
     }
     
@@ -88,12 +87,12 @@ std::vector<std::string> argparse(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
+
     std::vector<std::string> rst = argparse(argc, argv);
-    Preproc *p = new Preproc(rst.at(0));
-    std::ifstream asd(rst.at(0)) ;
-    std::stringstream asf;
-    asf << asd.rdbuf();
-    std::cout << "origin:\n" << asf.str() << std::endl;
-    std::cout << "after:\n" <<p->run() << std::endl;
+
+    Driver *driver = new Driver(rst);
+    driver->run();
+    delete driver;
+
     return 0;
 }

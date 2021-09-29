@@ -2,12 +2,12 @@
 
 #include "Keyvalue.hpp"
 
-std::unordered_map<std::string, std::string> Keyvalue::keyvalue;
+std::unordered_map<Key, std::string> Keyvalue::keyvalue;
 
-void Keyvalue::SetKey(std::string key, std::string value) {
+void Keyvalue::SetKey(Key key, std::string value) {
     Keyvalue::keyvalue[key] = value;
 }
 
-std::string Keyvalue::GetKey(std::string key) {
+std::string Keyvalue::GetKey(Key key) {
     return Keyvalue::keyvalue[key];
 }

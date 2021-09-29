@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-option(MINGW_OSX "Mingw build for WIN32 on OSX" ON)
+option(MINGW_OSX "Mingw build for WIN32 on OSX" OFF)
 
 if (MINGW_OSX)
     set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)

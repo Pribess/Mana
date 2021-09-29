@@ -5,9 +5,14 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
+#include <fstream>
+
+#include "front/Code.hpp"
 
 class Driver {
     private:
+        std::vector<std::string> filelist;
     public:
         Driver(std::vector<std::string> filelist);
 
