@@ -59,13 +59,13 @@ std::vector<std::string> argparse(int argc, char **argv) {
             case 'i':
                 Keyvalue::SetKey(mode, "Interpret");
                 if (Keyvalue::GetKey(target) != "") {
-                    ERROR("Interpreting mode cannot run with -o option");
+                    ERROR::ERROR("Interpreting mode cannot run with -o option");
                     exit(1);
                 }
                 break;
             case 'o':
                 if (Keyvalue::GetKey(mode) == "Interpret") {
-                    ERROR("-o option cannot declare with Interpreting mode");
+                    ERROR::ERROR("-o option cannot declare with Interpreting mode");
                     exit(1);
                 }
                 Keyvalue::SetKey(target, optarg);

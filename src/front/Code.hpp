@@ -8,6 +8,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "utils/Error.hpp"
+
 class Code {
     private:
         std::string filename;

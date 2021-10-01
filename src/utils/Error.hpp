@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 
-
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -25,13 +24,13 @@
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-namespace Error {
+namespace ERROR {
+    std::string GETROW(int idx, std::string code);
+    void ERROR(std::string str);
+    void GERROR(std::string filename, std::string pos, std::string str);
+};
 
-    std::string GETPOS(std::string::iterator iter, std::string *src);
-
-}
-
-#define ERROR(str) std::cout << str << std::endl;
-#define GERROR(filename, at, str) std::cout << filename << ": " << at << RED << "fatal error:" << RESET << str << std::endl;
+#define ERR_MISSING_DOUBLE_QUOTE_END "missing terminating \" character"
+#define ERR_MISSING_SINGLE_QUOTE_END "missing terminating \' character"
 
 #endif
