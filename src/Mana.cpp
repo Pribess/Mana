@@ -37,7 +37,7 @@ std::vector<std::string> argparse(int argc, char **argv) {
         std::endl;
         exit(1);
     }
-
+    
     static option optlist[] =  {
         {"help", no_argument, NULL, 'h'},
         {"version", no_argument, NULL, 'v'},

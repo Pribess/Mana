@@ -2,11 +2,12 @@
 
 #include "Error.hpp"
 
-std::string ERROR::GETROW(int idx, std::string code) {
+std::string ERROR::GETPOS(int idx, std::string code) {
 
     std::string ret;
 
     int row = 1;
+    int col = 1;
 
     for (int cnt = 0 ; cnt < idx ; cnt++) {
 
@@ -14,11 +15,17 @@ std::string ERROR::GETROW(int idx, std::string code) {
             row++;
         }
 
+        col++;
+
     }
 
     char buff[256];
 
     std::sprintf(buff, "%d", row);
+    ret.append(buff);
+    ret.append(":");
+
+    std::sprintf(buff, "%d", col);
     ret.append(buff);
     ret.append(":");
 

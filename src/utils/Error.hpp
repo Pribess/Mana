@@ -25,7 +25,7 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 namespace ERROR {
-    std::string GETROW(int idx, std::string code);
+    std::string GETPOS(int idx, std::string code);
     void ERROR(std::string str);
     void GERROR(std::string filename, std::string pos, std::string str);
 };

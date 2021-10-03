@@ -15,9 +15,8 @@ class Code {
         std::string filename;
         std::string code;
 
-        std::vector<std::string> tokens;
+        std::vector<std::string> lines;
 
-        void TrimLiteral();
     public:
         Code(std::string filename, std::string code);
 
