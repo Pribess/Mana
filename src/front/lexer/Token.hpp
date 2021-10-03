@@ -16,6 +16,10 @@ enum Token {
     
     Identifier,
 
+    Import,
+    As,
+    From,
+
     If,
     Elif,
     Else,
@@ -89,6 +93,10 @@ static std::map<std::string, Token> tokenmap = {
     
     {"#Identifier", Token::Identifier},
 
+    {"import", Token::Import},
+    {"as", Token::As},
+    {"from", Token::From},
+
     {"if", Token::If},
     {"else if", Token::Elif},
     {"else", Token::Else},
@@ -140,5 +148,10 @@ static std::map<std::string, Token> tokenmap = {
     {"float", Token::Float},
     {"new", Token::New},
 };
+
+typedef struct token {
+    Token tok;
+    std::string str;
+} token;
 
 #endif

@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iostream>
 
+#include "front/lexer/Token.hpp"
 #include "utils/Error.hpp"
 
 class Code {
@@ -16,6 +17,9 @@ class Code {
         std::string code;
 
         std::vector<std::string> lines;
+        std::string::iterator iter;
+
+        std::vector<token> tokens;
 
     public:
         Code(std::string filename, std::string code);

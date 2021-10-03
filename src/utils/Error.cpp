@@ -2,22 +2,9 @@
 
 #include "Error.hpp"
 
-std::string ERROR::GETPOS(int idx, std::string code) {
+std::string ERROR::TOPOS(int row, int col) {
 
     std::string ret;
-
-    int row = 1;
-    int col = 1;
-
-    for (int cnt = 0 ; cnt < idx ; cnt++) {
-
-        if (code.at(cnt) == '\n') {
-            row++;
-        }
-
-        col++;
-
-    }
 
     char buff[256];
 
