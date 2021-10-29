@@ -7,8 +7,8 @@
 #include <string>
 
 enum Key {
-    mode,
-    target
+    TARGET,
+    ASSEMBLE
 };
 
 class Keyvalue {
