@@ -16,9 +16,7 @@ class Code {
         std::string filename;
         std::string code;
 
-        std::vector<std::string> lines;
-        std::string::iterator iter;
-
+        std::vector<std::string> strtoken;
         std::vector<token> tokens;
 
     public:
