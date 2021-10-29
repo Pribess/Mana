@@ -25,12 +25,12 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 namespace ERROR {
-    std::string TOPOS(int row, int col);
+    std::string POSTOSTR(int row, int col);
     void ERROR(std::string str);
     void GERROR(std::string filename, std::string pos, std::string str);
 };
 
-#define ERRMSG_MISSING_DOUBLE_QUOTE_END "missing terminating \" character"
-#define ERRMSG_MISSING_SINGLE_QUOTE_END "missing terminating \' character"
+#define GERRMSG_MISSING_DOUBLE_QUOTE_END "missing terminating \" character"
+#define GERRMSG_MISSING_SINGLE_QUOTE_END "missing terminating \' character"
 
 #endif

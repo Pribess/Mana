@@ -2,7 +2,7 @@
 
 #include "Error.hpp"
 
-std::string ERROR::TOPOS(int row, int col) {
+std::string ERROR::POSTOSTR(int row, int col) {
 
     std::string ret;
 
