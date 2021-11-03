@@ -6,10 +6,11 @@
 #include <fstream>
 #include <sstream>
 
-#include "Version.hpp"
+#include <Version.hpp>
 
-#include "utils/data/Keyvalue.hpp"
-#include "front/Code.hpp"
+#include <utils/Keyvalue.hpp>
+#include <utils/Error.hpp>
+#include <front/Code.hpp>
 
 void help() {
     std::cout <<
@@ -45,7 +46,7 @@ std::vector<std::string> argparse(int argc, char **argv) {
 
     std::vector<std::string>::iterator iter = args.begin() + 1;
     
-    while (true) {
+    while (iter != args.end()) {
 
         if (iter[0].front() == '-') {
             if (iter[0] == "-h") {
@@ -93,10 +94,6 @@ std::vector<std::string> argparse(int argc, char **argv) {
         }
 
         iter++;
-
-        if (iter == args.end()) {
-            break;
-        }
 
     }
 
