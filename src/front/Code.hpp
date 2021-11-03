@@ -16,7 +16,6 @@ class Code {
         std::string filename;
         std::string code;
 
-        std::vector<std::string> strtoken;
         std::vector<token> tokens;
 
     public:
