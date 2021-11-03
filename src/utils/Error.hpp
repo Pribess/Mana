@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <cstring>
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -32,5 +33,6 @@ namespace ERROR {
 
 #define GERRMSG_MISSING_DOUBLE_QUOTE_END "missing terminating \" character"
 #define GERRMSG_MISSING_SINGLE_QUOTE_END "missing terminating \' character"
+#define GERRMSG_UNKNOWN_OPERATOR         "unknown operator"
 
 #endif

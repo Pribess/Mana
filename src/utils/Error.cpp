@@ -8,13 +8,15 @@ std::string ERROR::POSTOSTR(int row, int col) {
 
     char buff[256];
 
+    std::memset(buff, 0, sizeof(buff));
     std::sprintf(buff, "%d", row);
     ret.append(buff);
     ret.append(":");
 
+    std::memset(buff, 0, sizeof(buff));
     std::sprintf(buff, "%d", col);
     ret.append(buff);
-    ret.append(":");
+    ret.append(": ");
 
     return ret;
 
