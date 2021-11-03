@@ -40,14 +40,27 @@ enum Token {
     BitRShfit,
 
     OpAssignment,
-    OpIncrement,
-    OpDecrement,
+
     OpAdd,
+    OpIAdd,
+    OpFAdd,
+    OpDAdd,
+
     OpSub,
+    OpISub,
+    OpFSub,
+    OpDSub,
+
     OpMul,
+    OpIMul,
+    OpFMul,
+    OpDMul,
+
     OpDiv,
+    OpIDiv,
     OpFDiv,
-    OpMod,
+    OpDDiv,
+
     OpLcpy,
     OpRcpy,
 
@@ -69,7 +82,7 @@ enum Token {
     RBracket,
 
     Float,
-    New,
+    Double
 };
 
 enum class CharType {
@@ -84,15 +97,6 @@ enum class CharType {
 };
 
 static std::map<std::string, Token> tokenmap = {
-    {"#Unknown", Token::Unknown},
-    {"#End", Token::End},
-
-    {"#Number", Token::Number},
-    {"#String", Token::String},
-    {"#Char", Token::Char},
-    
-    {"#Identifier", Token::Identifier},
-
     {"import", Token::Import},
     {"as", Token::As},
     {"from", Token::From},
@@ -117,14 +121,27 @@ static std::map<std::string, Token> tokenmap = {
     {">>", Token::BitRShfit},
 
     {"=", Token::OpAssignment},
-    {"++", Token::OpIncrement},
-    {"--", Token::OpDecrement},
+
     {"+", Token::OpAdd},
+    {"+i", Token::OpIAdd},
+    {"+f", Token::OpFAdd},
+    {"+d", Token::OpDAdd},
+
     {"-", Token::OpSub},
+    {"-i", Token::OpISub},
+    {"-f", Token::OpFSub},
+    {"-d", Token::OpDSub},
+
     {"*", Token::OpMul},
+    {"*i", Token::OpIMul},
+    {"*f", Token::OpFMul},
+    {"*d", Token::OpDMul},
+
     {"/", Token::OpDiv},
+    {"/i", Token::OpIDiv},
     {"/f", Token::OpFDiv},
-    {"%", Token::OpMod},
+    {"/d", Token::OpDDiv},
+    
     {"<-", Token::OpLcpy},
     {"->", Token::OpRcpy},
 
@@ -146,7 +163,7 @@ static std::map<std::string, Token> tokenmap = {
     {"]", Token::RBracket},
 
     {"float", Token::Float},
-    {"new", Token::New},
+    {"double", Token::Double}
 };
 
 typedef struct token {
