@@ -41,6 +41,9 @@ enum Token {
 
     OpAssignment,
 
+    OpIncrement,
+    OpDecrement,
+
     OpAdd,
     OpIAdd,
     OpFAdd,
@@ -66,8 +69,8 @@ enum Token {
 
     LogicEqual,
     LogicNotEqual,
-    LogicAbove,
-    LogicBelow,
+    LessThanSign,
+    GreaterThanSign,
     LogicAboveOrEqual,
     LogicBelowOrEqual,
     LogicAnd,
@@ -82,7 +85,9 @@ enum Token {
     RBracket,
 
     Float,
-    Double
+    Double,
+    Let,
+    Const
 };
 
 enum class CharType {
@@ -122,6 +127,9 @@ static std::map<std::string, Token> tokenmap = {
 
     {"=", Token::OpAssignment},
 
+    {"++", Token::OpIncrement},
+    {"--", Token::OpDecrement},
+
     {"+", Token::OpAdd},
     {"+i", Token::OpIAdd},
     {"+f", Token::OpFAdd},
@@ -147,8 +155,8 @@ static std::map<std::string, Token> tokenmap = {
 
     {"==", Token::LogicEqual},
     {"!=", Token::LogicNotEqual},
-    {"<", Token::LogicAbove},
-    {">", Token::LogicBelow},
+    {"<", Token::LessThanSign},
+    {">", Token::GreaterThanSign},
     {"<=", Token::LogicAboveOrEqual},
     {">=", Token::LogicBelowOrEqual},
     {"&&", Token::LogicAnd},
@@ -163,7 +171,10 @@ static std::map<std::string, Token> tokenmap = {
     {"]", Token::RBracket},
 
     {"float", Token::Float},
-    {"double", Token::Double}
+    {"double", Token::Double},
+    
+    {"let", Token::Let},
+    {"const", Token::Const}
 };
 
 typedef struct token {

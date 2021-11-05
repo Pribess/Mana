@@ -51,7 +51,7 @@ void Code::Tokenize() {
                 std::string rst;
 
                 while (iter[0] >= '0' && iter[0] <= '9') {
-                    
+
                     rst.push_back(iter[0]);
                     iter++;
 
@@ -74,7 +74,7 @@ void Code::Tokenize() {
                     std::string msg;
                     msg.append(this->filename);
                     msg.append(":");
-                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, iter - liter[0].begin()));
+                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
                     msg.append(BOLDRED);
                     msg.append("error: ");
                     msg.append(RESET);
@@ -103,7 +103,7 @@ void Code::Tokenize() {
                     std::string msg;
                     msg.append(this->filename);
                     msg.append(":");
-                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, iter - liter[0].begin()));
+                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
                     msg.append(BOLDRED);
                     msg.append("error: ");
                     msg.append(RESET);
@@ -116,18 +116,26 @@ void Code::Tokenize() {
 
                 this->tokens.push_back(token{Token::Char, rst});
 
-            } else if ((iter[0] >= '!' && iter[0] <= '/') || (iter[0] >= ':' && iter[0] <= '@') || (iter[0] >= ']' && iter[0] <= '`') || (iter[0] >= '{' && iter[0] <= '~')
-            && iter[0] != '"' && iter[0] != '\'') {
+            } else if ((iter[0] >= '!' && iter[0] <= '/') || (iter[0] >= ':' && iter[0] <= '@') || (iter[0] >= '[' && iter[0] <= '`') || (iter[0] >= '{' && iter[0] <= '~')
+                && iter[0] != '"' && iter[0] != '\''
+            ) {
 
                 int ebegin = iter - liter[0].begin();
 
                 std::string rst;
+                rst.push_back(iter[0]);
+                iter++;
 
-                while ((iter[0] >= '!' && iter[0] <= '/') || (iter[0] >= ':' && iter[0] <= '@') || (iter[0] >= ']' && iter[0] <= '`') || (iter[0] >= '{' && iter[0] <= '~')
-                && iter[0] != '"' && iter[0] != '\'') {
+                if (rst != "[" && rst != "]" && rst != "(" && rst != ")" && rst != "{" && rst != "}" && rst != "<" && rst != ">") {
 
-                    rst.push_back(iter[0]);
-                    iter++;
+                    while (iter[0] >= '!' && iter[0] <= '~' &&
+                        iter[0] != '"' && iter[0] != '\''
+                    ) {
+
+                        rst.push_back(iter[0]);
+                        iter++;
+
+                    }
 
                 }
 
@@ -139,7 +147,7 @@ void Code::Tokenize() {
                     std::string msg;
                     msg.append(this->filename);
                     msg.append(":");
-                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, iter - liter[0].begin()));
+                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
                     msg.append(BOLDRED);
                     msg.append("error: ");
                     msg.append(RESET);
@@ -159,6 +167,19 @@ void Code::Tokenize() {
                     throw std::runtime_error(msg);
                 }
 
+            } else {
+                std::string msg;
+                msg.append(this->filename);
+                msg.append(":");
+                msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, iter - liter[0].begin()));
+                msg.append(BOLDRED);
+                msg.append("error: ");
+                msg.append(RESET);
+                msg.append("unknown character '");
+                msg.push_back(iter[0]);
+                msg.append("'");
+                std::cout << msg << std::endl;
+                throw std::runtime_error(msg);
             }
             
         }
