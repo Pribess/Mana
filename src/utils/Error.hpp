@@ -31,6 +31,7 @@ namespace ERROR {
     void GERROR(std::string filename, std::string pos, std::string str);
 };
 
+#define GERRMSG_INVALID_CONSTANT_FORMAT  "invalid constant format"
 #define GERRMSG_MISSING_DOUBLE_QUOTE_END "missing terminating \" character"
 #define GERRMSG_MISSING_SINGLE_QUOTE_END "missing terminating \' character"
 #define GERRMSG_UNKNOWN_OPERATOR         "unknown operator"

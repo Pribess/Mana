@@ -25,163 +25,150 @@ void Code::Tokenize() {
 
         while (iter != liter[0].end()) {
 
+            token tok;
+            tok.tok = Token::Unknown;
+
             if (iter[0] == ' ' || iter[0] == '\t' || iter[0] == '\r') {
 
                 iter++;
 
-            } else if ((iter[0] >= 'A' && iter[0] <= 'Z') || (iter[0] >= 'a' && iter[0] <= 'z')) {
-
-                std::string rst;
-
-                while ((iter[0] >= 'A' && iter[0] <= 'Z') || (iter[0] >= 'a' && iter[0] <= 'z') || (iter[0] >= '0' && iter[0] <= '9')) {
-
-                    rst.push_back(iter[0]);
-                    iter++;
-
-                }
-
-                if (tokenmap[rst]) {
-                    this->tokens.push_back(token{tokenmap[rst], rst});
-                } else {
-                    this->tokens.push_back(token{Token::Identifier, rst});
-                }
-
             } else if (iter[0] >= '0' && iter[0] <= '9') {
-
-                std::string rst;
-
-                while (iter[0] >= '0' && iter[0] <= '9') {
-
-                    rst.push_back(iter[0]);
-                    iter++;
-
-                }
-
-                this->tokens.push_back(token{Token::Number, rst});
-
-            } else if (iter[0] == '\"') {
-
-                std::string rst("\"");
-
-                iter++;
-
-                while (iter[0] >= ' ' && iter[0] <= '~' && iter[0] != '\"') {
-                    rst.push_back(iter[0]);
-                    iter++;
-                }
-
-                if (iter[0] != '\"') {
-                    std::string msg;
-                    msg.append(this->filename);
-                    msg.append(":");
-                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
-                    msg.append(BOLDRED);
-                    msg.append("error: ");
-                    msg.append(RESET);
-                    msg.append(GERRMSG_MISSING_DOUBLE_QUOTE_END);
-                    throw std::runtime_error(msg);
-                }
-
-                rst.append("\"");
-
-                this->tokens.push_back(token{Token::String, rst});
-
-                iter++;
-
-            } else if (iter[0] == '\'') {
-
-                std::string rst("\'");
-
-                iter++;
-
-                while (iter[0] >= ' ' && iter[0] <= '~' && iter[0] != '\'') {
-                    rst.push_back(iter[0]);
-                    iter++;
-                }
-
-                if (iter[0] != '\'') {
-                    std::string msg;
-                    msg.append(this->filename);
-                    msg.append(":");
-                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
-                    msg.append(BOLDRED);
-                    msg.append("error: ");
-                    msg.append(RESET);
-                    msg.append(GERRMSG_MISSING_SINGLE_QUOTE_END);
-                    throw std::runtime_error(msg);
-                }
-
-                rst.append("\'");
-                iter++;
-
-                this->tokens.push_back(token{Token::Char, rst});
-
-            } else if ((iter[0] >= '!' && iter[0] <= '/') || (iter[0] >= ':' && iter[0] <= '@') || (iter[0] >= '[' && iter[0] <= '`') || (iter[0] >= '{' && iter[0] <= '~')
-                && iter[0] != '"' && iter[0] != '\''
-            ) {
-
+                
+                tok.tok = Token::Number;
                 int ebegin = iter - liter[0].begin();
 
-                std::string rst;
-                rst.push_back(iter[0]);
-                iter++;
+                if (iter[0] == '0' && iter[1] == 'x') {
+                    // hex
+                    
+                    tok.str.push_back(iter[0]);
+                    iter++;
+                    tok.str.push_back(iter[0]);
+                    iter++;
 
-                if (rst != "[" && rst != "]" && rst != "(" && rst != ")" && rst != "{" && rst != "}" && rst != "<" && rst != ">") {
+                    while ((iter[0] >= '0' && iter[0] <= '9') || (iter[0] >= 'A' && iter[0] <= 'F') || (iter[0] >= 'a' && iter[0] <= 'f')) {
 
-                    while (iter[0] >= '!' && iter[0] <= '~' &&
-                        iter[0] != '"' && iter[0] != '\''
-                    ) {
+                        tok.str.push_back(iter[0]);
+                        iter++;
 
-                        rst.push_back(iter[0]);
+                    }
+
+                } else if (iter[0] == '0' && iter[1] == 'd') {
+                    // dec
+
+                    tok.str.push_back(iter[0]);
+                    iter++;
+                    tok.str.push_back(iter[0]);
+                    iter++;
+
+                    while (iter[0] >= '0' && iter[0] <= '9') {
+
+                        tok.str.push_back(iter[0]);
+                        iter++;
+
+                    }
+
+                } else if (iter[0] == '0' && iter[1] == 'o') {
+                    // oct
+                    
+                    tok.str.push_back(iter[0]);
+                    iter++;
+                    tok.str.push_back(iter[0]);
+                    iter++;
+
+                    while (iter[0] >= '0' && iter[0] <= '9') {
+
+                        if (iter[0] >= '8' && iter[0] <= '9') {
+
+                            int eend = iter - liter[0].begin() + 1;
+
+                            std::string msg;
+                            msg.append(this->filename);
+                            msg.append(":");
+                            msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, ebegin + 1));
+                            msg.append(BOLDRED);
+                            msg.append("error: ");
+                            msg.append(RESET);
+                            msg.append(GERRMSG_INVALID_CONSTANT_FORMAT);
+                            msg.append("\n");
+                            msg.append("    ");
+                            msg.push_back(((liter - lines.begin()) + 1) + 48);
+                            msg.append(" | ");
+                            for (int cnt = 0 ; cnt < liter[0].size() ; cnt++) {
+                                if (cnt == ebegin) {
+                                    msg.append(BOLDRED);
+                                } else if (cnt == eend) {
+                                    msg.append(RESET);
+                                }
+                                msg.push_back(liter[0].begin()[cnt]);
+                            }
+                            throw std::runtime_error(msg);
+
+                        }
+
+                        tok.str.push_back(iter[0]);
+                        iter++;
+
+                    }
+
+                } else if (iter[0] == '0' && iter[1] == 'b') {
+                    // bin
+
+                    tok.str.push_back(iter[0]);
+                    iter++;
+                    tok.str.push_back(iter[0]);
+                    iter++;
+
+                    while (iter[0] >= '0' && iter[0] <= '9') {
+
+                        if (iter[0] >= '2' && iter[0] <= '9') {
+
+                            int eend = iter - liter[0].begin() + 1;
+
+                            std::string msg;
+                            msg.append(this->filename);
+                            msg.append(":");
+                            msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, ebegin + 1));
+                            msg.append(BOLDRED);
+                            msg.append("error: ");
+                            msg.append(RESET);
+                            msg.append(GERRMSG_INVALID_CONSTANT_FORMAT);
+                            msg.append("\n");
+                            msg.append("    ");
+                            msg.push_back(((liter - lines.begin()) + 1) + 48);
+                            msg.append(" | ");
+                            for (int cnt = 0 ; cnt < liter[0].size() ; cnt++) {
+                                if (cnt == ebegin) {
+                                    msg.append(BOLDRED);
+                                } else if (cnt == eend) {
+                                    msg.append(RESET);
+                                }
+                                msg.push_back(liter[0].begin()[cnt]);
+                            }
+                            throw std::runtime_error(msg);
+
+                        }
+
+                        tok.str.push_back(iter[0]);
+                        iter++;
+
+                    }
+
+                } else {
+                    // dec (default)
+
+                    while (iter[0] >= '0' && iter[0] <= '9') {
+
+                        tok.str.push_back(iter[0]);
                         iter++;
 
                     }
 
                 }
 
-                int eend = iter - liter[0].begin();
+                this->tokens.push_back(tok);
 
-                if (tokenmap[rst]) {
-                    this->tokens.push_back(token{tokenmap[rst], rst});
-                } else {
-                    std::string msg;
-                    msg.append(this->filename);
-                    msg.append(":");
-                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
-                    msg.append(BOLDRED);
-                    msg.append("error: ");
-                    msg.append(RESET);
-                    msg.append(GERRMSG_UNKNOWN_OPERATOR);
-                    msg.append("\n");
-                    msg.append("    ");
-                    msg.push_back(((liter - lines.begin()) + 1) + 48);
-                    msg.append(" | ");
-                    for (int cnt ; cnt < liter[0].size() ; cnt++) {
-                        if (cnt == ebegin) {
-                            msg.append(BOLDRED);
-                        } else if (cnt == eend) {
-                            msg.append(RESET);
-                        }
-                        msg.push_back(liter[0].begin()[cnt]);
-                    }
-                    throw std::runtime_error(msg);
-                }
-
-            } else {
-                std::string msg;
-                msg.append(this->filename);
-                msg.append(":");
-                msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, iter - liter[0].begin()));
-                msg.append(BOLDRED);
-                msg.append("error: ");
-                msg.append(RESET);
-                msg.append("unknown character '");
-                msg.push_back(iter[0]);
-                msg.append("'");
-                std::cout << msg << std::endl;
-                throw std::runtime_error(msg);
             }
-            
+
         }
 
         liter++;
