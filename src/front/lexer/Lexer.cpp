@@ -1,6 +1,6 @@
 // Copyright (c) 2021 Heewon Cho
 
-#include "Lexer.hpp"
+#include <front/lexer/Lexer.hpp>
 
 Lexer::Lexer() {
                                                                                                                                              

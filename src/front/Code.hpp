@@ -8,8 +8,8 @@
 #include <sstream>
 #include <iostream>
 
-#include "front/lexer/Token.hpp"
-#include "utils/Error.hpp"
+#include <front/lexer/Token.hpp>
+#include <utils/Error.hpp>
 
 class Code {
     private:
