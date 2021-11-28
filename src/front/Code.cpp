@@ -167,6 +167,94 @@ void Code::Tokenize() {
 
                 this->tokens.push_back(tok);
 
+            } else if (iter[0] == '\"') {
+
+                tok.tok = Token::String;
+                int ebegin = iter - liter[0].begin();
+                
+                tok.str.push_back('"');
+                iter++;
+
+                while (iter[0] >= ' ' && iter[0] <= '~' && iter[0] != '\"') {
+                    tok.str.push_back(iter[0]);
+                    iter++;
+                }
+
+                if (iter[0] != '\"') {
+                    int eend = iter - liter[0].begin() + 1;
+                    
+                    std::string msg;
+                    msg.append(this->filename);
+                    msg.append(":");
+                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, ebegin + 1));
+                    msg.append(BOLDRED);
+                    msg.append("error: ");
+                    msg.append(RESET);
+                    msg.append(GERRMSG_MISSING_DOUBLE_QUOTE_END);
+                    msg.append("\n");
+                    msg.append("    ");
+                    msg.push_back(((liter - lines.begin()) + 1) + 48);
+                    msg.append(" | ");
+                    for (int cnt = 0 ; cnt < liter[0].size() ; cnt++) {
+                        if (cnt == ebegin) {
+                            msg.append(BOLDRED);
+                        } else if (cnt == eend) {
+                            msg.append(RESET);
+                        }
+                        msg.push_back(liter[0].begin()[cnt]);
+                    }
+                    throw std::runtime_error(msg);
+                }
+
+                tok.str.append("\"");
+
+                this->tokens.push_back(tok);
+
+                iter++;
+
+            } else if (iter[0] == '\'') {
+                
+                tok.tok = Token::Char;
+                int ebegin = iter - liter[0].begin();
+
+                iter++;
+
+                while (iter[0] >= ' ' && iter[0] <= '~' && iter[0] != '\'') {
+                    tok.str.push_back(iter[0]);
+                    iter++;
+                }
+
+                if (iter[0] != '\'') {
+                    int eend = iter - liter[0].begin() + 1;
+                    
+                    std::string msg;
+                    msg.append(this->filename);
+                    msg.append(":");
+                    msg.append(ERROR::POSTOSTR((liter - lines.begin()) + 1, (iter - liter[0].begin()) + 1));
+                    msg.append(BOLDRED);
+                    msg.append("error: ");
+                    msg.append(RESET);
+                    msg.append(GERRMSG_MISSING_SINGLE_QUOTE_END);
+                    msg.append("\n");
+                    msg.append("    ");
+                    msg.push_back(((liter - lines.begin()) + 1) + 48);
+                    msg.append(" | ");
+                    for (int cnt = 0 ; cnt < liter[0].size() ; cnt++) {
+                        if (cnt == ebegin) {
+                            msg.append(BOLDRED);
+                        } else if (cnt == eend) {
+                            msg.append(RESET);
+                        }
+                        msg.push_back(liter[0].begin()[cnt]);
+                    }
+                    throw std::runtime_error(msg);
+                }
+
+                tok.str.append("\'");
+                iter++;
+
+                this->tokens.push_back(tok);
+
             }
 
         }
