@@ -26,7 +26,7 @@ void ERROR::GERROR(const char *type, std::string filename, int line, std::vector
     std::string msg;
     msg.append(filename);
     msg.append(":");
-    msg.append(ERROR::POSTOSTR(line, ebegin + 1));
+    msg.append(ERROR::POSTOSTR(line, ebegin));
     msg.append(BOLDRED);
     msg.append("error: ");
     msg.append(RESET);

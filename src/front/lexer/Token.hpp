@@ -181,6 +181,8 @@ static std::map<std::string, Token> tokenmap = {
 typedef struct token {
     Token tok;
     std::string str;
+    int line;
+    std::pair<int, int> pos;
 } token;
 
 #endif

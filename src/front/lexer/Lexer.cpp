@@ -9,9 +9,11 @@ Lexer::Lexer(std::string filename, std::string code) {
 
 token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::iterator &iter, std::string filename) {
 
+    int ebegin = iter - liter[0].begin() + 1;
     token tok;
+    tok.line = line;
+    tok.pos.first = ebegin;
     tok.tok = Token::Number;
-    int ebegin = iter - liter[0].begin();
 
     if (iter[0] == '0' && iter[1] == 'x') {
         // hex
@@ -23,8 +25,8 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
 
         while ((iter[0] >= '0' && iter[0] <= '9') || (iter[0] >= 'A' && iter[0] <= 'F') || (iter[0] >= 'a' && iter[0] <= 'f')) {
 
-        tok.str.push_back(iter[0]);
-        iter++;
+            tok.str.push_back(iter[0]);
+            iter++;
 
         }
 
@@ -127,16 +129,20 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
 
     }
 
+    tok.pos.second = iter - liter[0].begin();
     return tok;
 
 }
 
 token lexstr(int line, std::vector<std::string>::iterator &liter, std::string::iterator &iter, std::string filename) {
 
+    int ebegin = iter - liter[0].begin() + 1;
+
     token tok;
+    tok.line = line;
+    tok.pos.first = ebegin;
     tok.tok = Token::String;
-    int ebegin = iter - liter[0].begin();
-                
+    
     tok.str.push_back(iter[0]);
     iter++;
 
@@ -155,15 +161,19 @@ token lexstr(int line, std::vector<std::string>::iterator &liter, std::string::i
     tok.str.push_back(iter[0]);
     iter++;
 
+    tok.pos.second = iter - liter[0].begin();
     return tok;
 
 }
 
 token lexchar(int line, std::vector<std::string>::iterator &liter, std::string::iterator &iter, std::string filename) {
 
+    int ebegin = iter - liter[0].begin() + 1;
+
     token tok;
+    tok.line = line;
+    tok.pos.first = ebegin;
     tok.tok = Token::Char;
-    int ebegin = iter - liter[0].begin();
 
     tok.str.push_back(iter[0]);
     iter++;
@@ -183,14 +193,18 @@ token lexchar(int line, std::vector<std::string>::iterator &liter, std::string::
     tok.str.push_back(iter[0]);
     iter++;
 
+    tok.pos.second = iter - liter[0].begin();
     return tok;
 
 }
 
 token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &liter, std::string::iterator &iter, std::string filename) {
 
+    int ebegin = iter - liter[0].begin() + 1;
+
     token tok;
-    int ebegin = iter - liter[0].begin();
+    tok.line = line;
+    tok.pos.first = ebegin;
     
     while ((iter[0] >= 'A' && iter[0] <= 'Z') || (iter[0] >= 'a' && iter[0] <= 'z') || (iter[0] >= '0' && iter[0] <= '9')) {
 
@@ -264,6 +278,7 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
         }
 
+        tok.pos.second = iter - liter[0].begin();
         return tok;
 
     }
@@ -277,9 +292,11 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
     if (tokenmap[tok.str]) {
         tok.tok = tokenmap[tok.str];
+        tok.pos.second = iter - liter[0].begin();
         return tok;
     } else {
         tok.tok = Token::Identifier;
+        tok.pos.second = iter - liter[0].begin();
         return tok;
     }
 
@@ -287,8 +304,11 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
 token lexoperator(int line, std::vector<std::string>::iterator &liter, std::string::iterator &iter, std::string filename) {
 
+    int ebegin = iter - liter[0].begin() + 1;
+
     token tok;
-    int ebegin = iter - liter[0].begin();
+    tok.line = line;
+    tok.pos.first = ebegin;
 
     if (iter[0] == '<' && ((iter[1] >= 'A' && iter[1] <= 'Z') || (iter[1] >= 'a' && iter[1] <= 'z'))) {
         // lex pop
@@ -314,6 +334,7 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         iter++;
 
         tok.tok = Token::Pop;
+        tok.pos.second = iter - liter[0].begin();
         return tok;
 
     } else {
@@ -340,10 +361,12 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         
         if (tokenmap[tok.str]) {
             tok.tok = tokenmap[tok.str];
+            tok.pos.second = iter - liter[0].begin();
             return tok;
         } else {
             int eend = iter - liter[0].begin() + 1;
             ERROR::GERROR(GERRMSG_UNKNOWN_OPERATOR, filename, line, liter, iter, ebegin, eend);
+            tok.pos.second = iter - liter[0].begin();
             return tok;
         }
 
@@ -406,7 +429,7 @@ std::vector<token> Lexer::lex() {
     }
 
     for (auto cnt : this->tokens) {
-        std::cout << cnt.str << ":" << cnt.tok << std::endl;
+        std::cout << cnt.str << ":" << cnt.tok << ":" << cnt.line << ":" << ERROR::POSTOSTR(cnt.pos.first, cnt.pos.second) << std::endl;
     }
 
     return this->tokens;
