@@ -116,7 +116,6 @@ class Mana {
             ss<<ifs.rdbuf();
 
             Code c(filelist.at(0), ss.str());
-            c.Tokenize();
         }
 
 };

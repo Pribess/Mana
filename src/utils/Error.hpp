@@ -33,8 +33,10 @@ namespace ERROR {
 
 #define GERRMSG_INVALID_CONSTANT_FORMAT     "invalid constant format"
 #define GERRMSG_INVALID_IDENTIFIER_FORMAT   "invalid identifier format"
+#define GERRMSG_INVALID_KEYWORD_FORMAT      "invalid keyword format"
+#define GERRMSG_INVALID_OPERATOR_FORMAT     "invalid operator format"
 #define GERRMSG_KEYWORD_MISSING_LPAREN      "missing ( character after keyword"
-#define GERRMSG_KEYWORD_MISSING_RPAREN      "missing terminating ( scope"
+#define GERRMSG_KEYWORD_MISSING_RPAREN      "missing terminating scope with ) character"
 #define GERRMSG_MISSING_ARG_KEYWORD         "missing argument in keyword"
 #define GERRMSG_MISSING_DOUBLE_QUOTE_END    "missing terminating \" character"
 #define GERRMSG_MISSING_SINGLE_QUOTE_END    "missing terminating \' character"

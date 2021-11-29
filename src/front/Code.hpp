@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include <front/lexer/Token.hpp>
+#include <front/lexer/Lexer.hpp>
 #include <utils/Error.hpp>
 
 class Code {
@@ -16,12 +17,11 @@ class Code {
         std::string filename;
         std::string code;
 
-        std::vector<token> tokens;
+        Lexer *lexer;
 
     public:
         Code(std::string filename, std::string code);
 
-        void Tokenize();
 };
 
 #endif
