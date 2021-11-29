@@ -15,6 +15,7 @@ enum Token {
     Char,
     
     Identifier,
+    Pop,
 
     Import,
     As,

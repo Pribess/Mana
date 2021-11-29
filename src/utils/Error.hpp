@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -27,13 +28,17 @@
 
 namespace ERROR {
     std::string POSTOSTR(int row, int col);
-    void ERROR(std::string str);
-    void GERROR(std::string filename, std::string pos, std::string str);
+    void GERROR(const char *type, std::string filename, int line, std::vector<std::string>::iterator &liter, std::string::iterator &iter, int ebegin, int eend);
 };
 
-#define GERRMSG_INVALID_CONSTANT_FORMAT  "invalid constant format"
-#define GERRMSG_MISSING_DOUBLE_QUOTE_END "missing terminating \" character"
-#define GERRMSG_MISSING_SINGLE_QUOTE_END "missing terminating \' character"
-#define GERRMSG_UNKNOWN_OPERATOR         "unknown operator"
+#define GERRMSG_INVALID_CONSTANT_FORMAT     "invalid constant format"
+#define GERRMSG_INVALID_IDENTIFIER_FORMAT   "invalid identifier format"
+#define GERRMSG_KEYWORD_MISSING_LPAREN      "missing ( character after keyword"
+#define GERRMSG_KEYWORD_MISSING_RPAREN      "missing terminating ( scope"
+#define GERRMSG_MISSING_ARG_KEYWORD         "missing argument in keyword"
+#define GERRMSG_MISSING_DOUBLE_QUOTE_END    "missing terminating \" character"
+#define GERRMSG_MISSING_SINGLE_QUOTE_END    "missing terminating \' character"
+#define GERRMSG_MISSING_GREATERTHENSIGN     "missing terminating < scope"
+#define GERRMSG_UNKNOWN_OPERATOR            "unknown operator"
 
 #endif
