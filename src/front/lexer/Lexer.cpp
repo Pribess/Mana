@@ -321,6 +321,12 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         while (iter[0] >= '!' && iter[0] <= '~' &&
             iter[0] != '"' && iter[0] != '\''
         ) {
+            
+            if (iter[0] == '[' || iter[0] == ']') {
+                tok.str.push_back(iter[0]);
+                iter++;
+                break;
+            }
 
             if (1 < tok.str.size()) {
                 int eend = iter - liter[0].begin() + 1;
