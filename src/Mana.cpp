@@ -35,6 +35,10 @@ void version() {
 
 std::vector<std::string> argparse(int argc, char **argv) {
 
+    if (argc < 2) {
+        throw std::runtime_error("usage: mana <option> <file>\n\n\"mana --help\" and \"mana -h\" list available option");
+    }
+
     std::vector<std::string> filelist;
     std::vector<std::string> args;
 
