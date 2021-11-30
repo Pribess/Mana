@@ -32,6 +32,7 @@ enum Token {
     Do,
     Again,
     While,
+    Break,
 
     BitAnd,
     BitOr,
@@ -87,6 +88,7 @@ enum Token {
 
     Float,
     Double,
+
     Let,
     Const,
 
@@ -120,6 +122,7 @@ static std::map<std::string, Token> tokenmap = {
     {"do", Token::Do},
     {"again", Token::Again},
     {"while", Token::While},
+    {"break", Token::Break},
 
     {"&", Token::BitAnd},
     {"|", Token::BitOr},
@@ -178,6 +181,7 @@ static std::map<std::string, Token> tokenmap = {
     
     {"let", Token::Let},
     {"const", Token::Const},
+    
 
     {";", Token::Semicolon}
 };

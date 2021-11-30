@@ -30,13 +30,6 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
 
         }
 
-        if (!(iter[0] == ' ' || iter == liter[0].end())) {
-
-            int eend = iter - liter[0].begin() + 1;
-            ERROR::GERROR(GERRMSG_INVALID_CONSTANT_FORMAT, filename, line, liter, iter, ebegin, eend);
-
-        }
-
     } else if (iter[0] == '0' && iter[1] == 'd') {
         // dec
 
@@ -74,13 +67,6 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
 
         }
 
-        if (!(iter[0] == ' ' || iter == liter[0].end())) {
-
-            int eend = iter - liter[0].begin() + 1;
-            ERROR::GERROR(GERRMSG_INVALID_CONSTANT_FORMAT, filename, line, liter, iter, ebegin, eend);
-
-        }
-
     } else if (iter[0] == '0' && iter[1] == 'b') {
         // bin
 
@@ -100,13 +86,6 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
 
             tok.str.push_back(iter[0]);
             iter++;
-
-        }
-
-        if (!(iter[0] == ' ' || iter == liter[0].end())) {
-
-            int eend = iter - liter[0].begin() + 1;
-            ERROR::GERROR(GERRMSG_INVALID_CONSTANT_FORMAT, filename, line, liter, iter, ebegin, eend);
 
         }
 
@@ -131,12 +110,12 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
 
         }
 
-        if (!(iter[0] == ' ' || iter == liter[0].end())) {
+    }
+
+    if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';')) {
 
             int eend = iter - liter[0].begin() + 1;
             ERROR::GERROR(GERRMSG_INVALID_CONSTANT_FORMAT, filename, line, liter, iter, ebegin, eend);
-
-        }
 
     }
 
@@ -294,7 +273,7 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
     }
 
-    if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')')) {
+    if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';')) {
 
         int eend = iter - liter[0].begin() + 1;
         ERROR::GERROR(GERRMSG_INVALID_IDENTIFIER_FORMAT, filename, line, liter, iter, ebegin, eend);
