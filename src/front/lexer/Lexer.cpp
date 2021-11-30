@@ -261,7 +261,7 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
         tok.str.push_back(iter[0]);
         iter++;
 
-        if (!(iter[0] == ' ' || iter == liter[0].end())) {
+        if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';')) {
 
             int eend = iter - liter[0].begin() + 1;
             ERROR::GERROR(GERRMSG_INVALID_KEYWORD_FORMAT, filename, line, liter, iter, ebegin, eend);
@@ -273,7 +273,7 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
     }
 
-    if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';')) {
+    if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';' || iter[0] == ',')) {
 
         int eend = iter - liter[0].begin() + 1;
         ERROR::GERROR(GERRMSG_INVALID_IDENTIFIER_FORMAT, filename, line, liter, iter, ebegin, eend);
