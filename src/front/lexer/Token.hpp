@@ -88,7 +88,9 @@ enum Token {
     Float,
     Double,
     Let,
-    Const
+    Const,
+
+    Semicolon
 };
 
 enum class CharType {
@@ -175,7 +177,9 @@ static std::map<std::string, Token> tokenmap = {
     {"double", Token::Double},
     
     {"let", Token::Let},
-    {"const", Token::Const}
+    {"const", Token::Const},
+
+    {";", Token::Semicolon}
 };
 
 typedef struct token {

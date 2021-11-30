@@ -36,12 +36,13 @@ void ERROR::GERROR(const char *type, std::string filename, int line, std::vector
     msg.push_back((line) + 48);
     msg.append(" | ");
     for (int cnt = 0 ; cnt < liter[0].size() ; cnt++) {
-        if (cnt == ebegin) {
+        if (cnt == ebegin - 1) {
             msg.append(BOLDRED);
-        } else if (cnt == eend) {
+        } else if (cnt == eend - 1) {
             msg.append(RESET);
         }
         msg.push_back(liter[0].begin()[cnt]);
     }
+    msg.append(RESET);
     throw std::runtime_error(msg);
 }

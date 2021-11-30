@@ -113,10 +113,21 @@ token lexnum(int line, std::vector<std::string>::iterator &liter, std::string::i
     } else {
         // dec (default)
 
-        while (iter[0] >= '0' && iter[0] <= '9') {
+        bool prime = false;
+
+        while ((iter[0] >= '0' && iter[0] <= '9') || iter[0] == '.') {
 
             tok.str.push_back(iter[0]);
             iter++;
+
+            if (iter[0] == '.' && prime) {
+                int eend = iter - liter[0].begin() + 1;
+                ERROR::GERROR(GERRMSG_INVALID_CONSTANT_FORMAT, filename, line, liter, iter, ebegin, eend);
+            }
+
+            if (iter[0] == '.') {
+                prime = true;
+            }
 
         }
 
@@ -283,7 +294,7 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
     }
 
-    if (!(iter[0] == ' ' || iter == liter[0].end())) {
+    if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')')) {
 
         int eend = iter - liter[0].begin() + 1;
         ERROR::GERROR(GERRMSG_INVALID_IDENTIFIER_FORMAT, filename, line, liter, iter, ebegin, eend);
@@ -333,6 +344,13 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         tok.str.push_back(iter[0]);
         iter++;
 
+        if (!(iter[0] == ' ' || iter == liter[0].end())) {
+
+            int eend = iter - liter[0].begin() + 1;
+            ERROR::GERROR(GERRMSG_INVALID_KEYWORD_FORMAT, filename, line, liter, iter, ebegin, eend);
+
+        }
+
         tok.tok = Token::Pop;
         tok.pos.second = iter - liter[0].begin();
         return tok;
@@ -342,20 +360,19 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         while (iter[0] >= '!' && iter[0] <= '~' &&
             iter[0] != '"' && iter[0] != '\''
         ) {
+
+            if (1 < tok.str.size()) {
+                break;
+            }
             
-            if (iter[0] == '[' || iter[0] == ']') {
+            if (iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')') {
                 tok.str.push_back(iter[0]);
                 iter++;
                 break;
             }
 
-            if (1 < tok.str.size()) {
-                int eend = iter - liter[0].begin() + 1;
-                ERROR::GERROR(GERRMSG_INVALID_OPERATOR_FORMAT, filename, line, liter, iter, ebegin, eend);
-            } else {
-                tok.str.push_back(iter[0]);
-                iter++;
-            }
+            tok.str.push_back(iter[0]);
+            iter++;
 
         }
         
