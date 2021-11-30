@@ -303,7 +303,7 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
     if (iter[0] == '<' && ((iter[1] >= 'A' && iter[1] <= 'Z') || (iter[1] >= 'a' && iter[1] <= 'z'))) {
         // lex pop
 
-        tok.str.push_back('<');
+        tok.str.push_back(iter[0]);
         iter++;
 
         while ((iter[0] >= 'A' && iter[0] <= 'Z') || (iter[0] >= 'a' && iter[0] <= 'z') || (iter[0] >= '0' && iter[0] <= '9')) {
@@ -334,6 +334,33 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         tok.pos.second = iter - liter[0].begin();
         return tok;
 
+    } else if (iter[0] == '-' && (iter[1] >= '0' && iter[1] <= '9')) {
+        // lex negative
+
+        tok.str.push_back(iter[0]);
+        iter++;
+
+        bool prime = false;
+
+        while ((iter[0] >= '0' && iter[0] <= '9') || iter[0] == '.') {
+            
+            tok.str.push_back(iter[0]);
+            iter++;
+
+            if (iter[0] == '.' && prime) {
+                int eend = iter - liter[0].begin() + 1;
+                ERROR::GERROR(GERRMSG_INVALID_CONSTANT_FORMAT, filename, line, liter, iter, ebegin, eend);
+            }
+
+            if (iter[0] == '.') {
+                prime = true;
+            }
+
+        }
+
+        tok.tok = Token::Number;
+        tok.pos.second = iter - liter[0].begin();
+        return tok;
     } else {
 
         while (iter[0] >= '!' && iter[0] <= '~' &&
