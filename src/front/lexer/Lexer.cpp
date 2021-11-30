@@ -323,7 +323,7 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         tok.str.push_back(iter[0]);
         iter++;
 
-        if (!(iter[0] == ' ' || iter == liter[0].end())) {
+        if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';')) {
 
             int eend = iter - liter[0].begin() + 1;
             ERROR::GERROR(GERRMSG_INVALID_KEYWORD_FORMAT, filename, line, liter, iter, ebegin, eend);
@@ -361,6 +361,32 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
         tok.tok = Token::Number;
         tok.pos.second = iter - liter[0].begin();
         return tok;
+
+    } else if ((iter[0] == '*' || iter[0] == '&') && ((iter[1] >= 'A' && iter[1] <= 'Z') || (iter[1] >= 'a' && iter[1] <= 'z'))) {
+        // lex pointer
+
+        tok.str.push_back(iter[0]);
+        iter++;
+
+        tok.tok = tokenmap[tok.str];
+
+        while ((iter[0] >= 'A' && iter[0] <= 'Z') || (iter[0] >= 'a' && iter[0] <= 'z') || (iter[0] >= '0' && iter[0] <= '9')) {
+
+            tok.str.push_back(iter[0]);
+            iter++;
+
+        }
+
+        if (!(iter[0] == ' ' || iter == liter[0].end()) && !(iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ';')) {
+
+            int eend = iter - liter[0].begin() + 1;
+            ERROR::GERROR(GERRMSG_INVALID_OPERATOR_FORMAT, filename, line, liter, iter, ebegin, eend);
+
+        }
+
+        tok.pos.second = iter - liter[0].begin();
+        return tok;
+
     } else {
 
         while (iter[0] >= '!' && iter[0] <= '~' &&
