@@ -176,7 +176,6 @@ static std::map<std::string, Token> tokenmap = {
     {"[", Token::LBracket},
     {"]", Token::RBracket},
 
-    {"float", Token::Float},
     {"double", Token::Double},
     
     {"let", Token::Let},

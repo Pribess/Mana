@@ -203,7 +203,7 @@ token lexidentifierandkeyword(int line, std::vector<std::string>::iterator &lite
 
     }
 
-    if (tokenmap[tok.str] == Token::Double || tokenmap[tok.str] == Token::Float) {
+    if (tokenmap[tok.str] == Token::Double) {
         // lex keyword
 
         tok.tok = tokenmap[tok.str];
