@@ -86,8 +86,8 @@ enum Token {
     LBracket,
     RBracket,
 
-    Float,
     Double,
+    Asm,
 
     Let,
     Const,
@@ -177,6 +177,7 @@ static std::map<std::string, Token> tokenmap = {
     {"]", Token::RBracket},
 
     {"double", Token::Double},
+    {"asm", Token::Asm},
     
     {"let", Token::Let},
     {"const", Token::Const},
