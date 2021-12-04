@@ -8,7 +8,7 @@
 #include <sstream>
 #include <iostream>
 
-#include <front/lexer/Token.hpp>
+#include <front/Token.hpp>
 #include <front/lexer/Lexer.hpp>
 #include <utils/Error.hpp>
 
