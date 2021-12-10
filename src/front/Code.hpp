@@ -8,7 +8,7 @@
 #include <sstream>
 #include <iostream>
 
-#include <front/Token.hpp>
+#include <front/lexer/Token.hpp>
 #include <front/lexer/Lexer.hpp>
 #include <utils/Error.hpp>
 
@@ -18,6 +18,7 @@ class Code {
         std::string code;
 
         Lexer *lexer;
+
 
     public:
         Code(std::string filename, std::string code);

@@ -43,6 +43,9 @@ enum Token {
 
     OpAssignment,
 
+    OpAddress,
+    OpReference,
+
     OpIncrement,
     OpDecrement,
 
@@ -65,9 +68,6 @@ enum Token {
     OpIDiv,
     OpFDiv,
     OpDDiv,
-
-    OpLcpy,
-    OpRcpy,
 
     LogicEqual,
     LogicNotEqual,
@@ -156,9 +156,6 @@ static std::map<std::string, Token> tokenmap = {
     {"/f", Token::OpFDiv},
     {"/d", Token::OpDDiv},
     
-    {"<-", Token::OpLcpy},
-    {"->", Token::OpRcpy},
-
     {"==", Token::LogicEqual},
     {"!=", Token::LogicNotEqual},
     {"<", Token::LessThanSign},
