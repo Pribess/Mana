@@ -26,9 +26,6 @@ enum Token {
     Else,
     Endif,
 
-    Switch,
-    Case,
-
     Do,
     Again,
     While,
@@ -50,22 +47,22 @@ enum Token {
     OpDecrement,
 
     OpAdd,
-    OpIAdd,
+    OpUAdd,
     OpFAdd,
     OpDAdd,
 
     OpSub,
-    OpISub,
+    OpUSub,
     OpFSub,
     OpDSub,
 
     OpMul,
-    OpIMul,
+    OpUMul,
     OpFMul,
     OpDMul,
 
     OpDiv,
-    OpIDiv,
+    OpUDiv,
     OpFDiv,
     OpDDiv,
 
@@ -116,9 +113,6 @@ static std::map<std::string, Token> tokenmap = {
     {"else", Token::Else},
     {"endif", Token::Endif},
 
-    {"switch", Token::Switch},
-    {"#case", Token::Case},
-
     {"do", Token::Do},
     {"again", Token::Again},
     {"while", Token::While},
@@ -137,22 +131,22 @@ static std::map<std::string, Token> tokenmap = {
     {"--", Token::OpDecrement},
 
     {"+", Token::OpAdd},
-    {"+i", Token::OpIAdd},
+    {"+u", Token::OpUAdd},
     {"+f", Token::OpFAdd},
     {"+d", Token::OpDAdd},
 
     {"-", Token::OpSub},
-    {"-i", Token::OpISub},
+    {"-u", Token::OpUSub},
     {"-f", Token::OpFSub},
     {"-d", Token::OpDSub},
 
     {"*", Token::OpMul},
-    {"*i", Token::OpIMul},
+    {"*u", Token::OpUMul},
     {"*f", Token::OpFMul},
     {"*d", Token::OpDMul},
 
     {"/", Token::OpDiv},
-    {"/i", Token::OpIDiv},
+    {"/i", Token::OpUDiv},
     {"/f", Token::OpFDiv},
     {"/d", Token::OpDDiv},
     

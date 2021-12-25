@@ -79,6 +79,14 @@ struct Import : Statement {
     From *from;
 };
 
+struct Plus : Statement {
+
 };
+
+struct UPlus : Statement {
+
+};
+
+}
 
 #endif

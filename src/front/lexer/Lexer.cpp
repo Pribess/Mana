@@ -404,7 +404,7 @@ token lexoperator(int line, std::vector<std::string>::iterator &liter, std::stri
                 break;
             }
             
-            if (iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')') {
+            if (iter[0] == '[' || iter[0] == ']' || iter[0] == '{' || iter[0] == '}' || iter[0] == '(' || iter[0] == ')' || iter[0] == ',') {
                 tok.str.push_back(iter[0]);
                 iter++;
                 break;
