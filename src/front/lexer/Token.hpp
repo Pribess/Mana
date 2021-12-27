@@ -21,6 +21,8 @@ enum Token {
     As,
     From,
 
+    Extern,
+
     If,
     Elif,
     Else,
@@ -107,6 +109,8 @@ static std::map<std::string, Token> tokenmap = {
     {"import", Token::Import},
     {"as", Token::As},
     {"from", Token::From},
+
+    {"extern", Token::Extern},
 
     {"if", Token::If},
     {"else if", Token::Elif},
