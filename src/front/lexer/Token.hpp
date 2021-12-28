@@ -18,7 +18,6 @@ enum Token {
     Pop,
 
     Import,
-    As,
     From,
 
     Extern,
@@ -107,7 +106,6 @@ enum class CharType {
 
 static std::map<std::string, Token> tokenmap = {
     {"import", Token::Import},
-    {"as", Token::As},
     {"from", Token::From},
 
     {"extern", Token::Extern},
